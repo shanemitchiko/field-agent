@@ -105,26 +105,21 @@ begin
     delete from agency_agent;
 	delete from agency;
 	alter table agency auto_increment = 1;
+    delete from alias;
+    alter table alias auto_increment = 1;
     delete from agent;
     alter table agent auto_increment = 1;
     delete from security_clearance;
     alter table security_clearance auto_increment = 1;
-    delete from alias;
-    alter table alias auto_increment = 1;
     
     insert into agency(agency_id, short_name, long_name) values
         (1, 'ACME', 'Agency to Classify & Monitor Evildoers'),
         (2, 'MASK', 'Mobile Armored Strike Kommand'),
         (3, 'ODIN', 'Organization of Democratic Intelligence Networks');
-    
+        
     insert into security_clearance values
 	(1, 'Secret'),
     (2, 'Top Secret');
-    
-    insert into alias (alias_id, name, persona, agent_id)
-    values
-    (1, 'Corbin March', 'Software Engineer Program Instructor who loves philosophy and his family', 9),
-    (2, 'Irina Cudo', 'Software Engineer Program Instructor Assistant who flips houses and loves playing with cats', 10);
     
 	insert into location (location_id, name, address, city, region, country_code, postal_code, agency_id)
 		values
@@ -146,7 +141,12 @@ begin
 		('Urban','H','Carwithen',null,58),
 		('Ulises','B','Muhammad','2008-04-01',80),
 		('Phylys','Y','Howitt','1979-03-28',68);
-        
+	
+    insert into alias
+    values
+    (1, 'Irina', 'Software Engineer Program Instructor Assistant by day, cat aficionado and house flipper by night', 1),
+    (2, 'Corbin', 'Nature-loving Philosopher with a side gig of Software Engineer Program Instructor', 2);
+    
 	insert into agency_agent 
 		(agency_id, agent_id, identifier, security_clearance_id, activation_date)
     select
@@ -167,4 +167,4 @@ delimiter ;
 -- data
 -- insert into security_clearance values
 -- 	(1, 'Secret'),
---     (2, 'Top Secret');
+--  (2, 'Top Secret');

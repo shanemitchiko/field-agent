@@ -43,6 +43,8 @@ public class Alias {
         this.persona = persona;
     }
 
+    public Agent getAgent() {return agent;}
+
     public void setAgent(Agent agent) {
         this.agent = agent;
     }

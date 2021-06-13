@@ -1,5 +1,6 @@
 package learn.field_agent.data;
 
+import learn.field_agent.models.Agent;
 import learn.field_agent.models.Alias;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,9 +25,15 @@ class AliasJdbcTemplateRepositoryTest {
     @Test
     void shouldAddAlias() {
         Alias alias = new Alias();
-        alias.setAliasId(1);
         alias.setName("TEST ALIAS");
+        alias.setPersona("TEST PERSONA");
+
+        Agent hazel = repository.findAgentByAliasId(1);
+        assertNotNull(hazel);
+        alias.setAgent(hazel);
+
         Alias actual = repository.add(alias);
-        assertEquals(1, actual.getAliasId());
+        assertNotNull(actual);
+        assertEquals(3, actual.getAliasId());
     }
 }

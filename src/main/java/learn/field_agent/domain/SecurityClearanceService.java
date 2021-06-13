@@ -77,5 +77,4 @@ public class SecurityClearanceService {
             }
         return result;
     }
-
 }
