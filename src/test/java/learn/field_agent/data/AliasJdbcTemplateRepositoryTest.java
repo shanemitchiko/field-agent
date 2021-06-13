@@ -24,6 +24,23 @@ class AliasJdbcTemplateRepositoryTest {
 
     @Test
     void shouldAddAlias() {
+        Alias alias = makeAlias();
+
+        Alias actual = repository.add(alias);
+        assertNotNull(actual);
+        assertEquals(3, actual.getAliasId());
+    }
+
+    @Test
+    void shouldUpdate() {
+        Alias alias = makeAlias();
+        alias.setAliasId(3);
+        alias.setName("UPDATED ALIAS");
+        assertTrue(repository.update(alias));
+
+    }
+
+    private Alias makeAlias() {
         Alias alias = new Alias();
         alias.setName("TEST ALIAS");
         alias.setPersona("TEST PERSONA");
@@ -31,9 +48,6 @@ class AliasJdbcTemplateRepositoryTest {
         Agent hazel = repository.findAgentByAliasId(1);
         assertNotNull(hazel);
         alias.setAgent(hazel);
-
-        Alias actual = repository.add(alias);
-        assertNotNull(actual);
-        assertEquals(3, actual.getAliasId());
+        return alias;
     }
 }

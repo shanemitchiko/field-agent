@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 
 @Repository
 public class AliasJdbcTemplateRepository implements AliasRepository {
@@ -20,7 +21,14 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
 
     public AliasJdbcTemplateRepository(JdbcTemplate jdbcTemplate) { this.jdbcTemplate = jdbcTemplate; }
 
-//    public Alias findAll()
+    @Override
+    public List<Alias> findAll() {
+        final String sql = "select a.alias_id, a.name, a.persona, a.agent_id, " +
+                "ag.agent_id, ag.first_name, ag.middle_name, ag.last_name, ag.dob, ag. height_in_inches " +
+                "from alias a " +
+                "inner join agent ag on ag.agent_id = a.agent_id;";
+        return jdbcTemplate.query(sql, new AliasMapper());
+    }
 
     public Alias add(Alias alias) {
 
@@ -42,6 +50,24 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
 
         alias.setAliasId(keyHolder.getKey().intValue());
         return alias;
+    }
+
+    public boolean update(Alias alias) {
+
+        final String sql = "update alias set "
+                + "name = ?, "
+                + "persona = ? "
+                + "where alias_id = ? and agent_id = ?;";
+
+        return jdbcTemplate.update(sql,
+                alias.getAliasId(),
+                alias.getName(),
+                alias.getPersona(),
+                alias.getAgent().getAgentId()) > 0;
+    }
+
+    public boolean deleteById(int aliasId) {
+        return jdbcTemplate.update("delete from alias where alias_id = ?;", aliasId) > 0;
     }
 
     private void addAgencies(Agent agent) {
