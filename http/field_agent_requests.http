@@ -1,0 +1,30 @@
+GET http://localhost:8080/api/security_clearance HTTP/1.1
+
+###
+
+GET http://localhost:8080/api/security_clearance/1 HTTP/1.1
+
+###
+
+POST http://localhost:8080/api/security_clearance HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Hidden Secret"
+}
+
+###
+
+PUT http://localhost:8080/api/security_clearance/3 HTTP/1.1
+Content-Type: application/json
+Accept: application/json
+
+{
+    "securityClearanceId": 3,
+    "name": "Updated Secret"
+  }
+
+###
+
+DELETE http://localhost:8080/api/security_clearance/3 HTTP/1.1

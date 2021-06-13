@@ -7,10 +7,16 @@ public class Alias {
     private String persona;
 
 
+    private Agent agent;
+
+
     public Alias(int aliasId, String name, String persona) {
         this.aliasId = aliasId;
         this.name = name;
         this.persona = persona;
+    }
+
+    public Alias() {
     }
 
     public int getAliasId() {
@@ -35,5 +41,9 @@ public class Alias {
 
     public void setPersona(String persona) {
         this.persona = persona;
+    }
+
+    public void setAgent(Agent agent) {
+        this.agent = agent;
     }
 }

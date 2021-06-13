@@ -109,6 +109,8 @@ begin
     alter table agent auto_increment = 1;
     delete from security_clearance;
     alter table security_clearance auto_increment = 1;
+    delete from alias;
+    alter table alias auto_increment = 1;
     
     insert into agency(agency_id, short_name, long_name) values
         (1, 'ACME', 'Agency to Classify & Monitor Evildoers'),
@@ -118,6 +120,11 @@ begin
     insert into security_clearance values
 	(1, 'Secret'),
     (2, 'Top Secret');
+    
+    insert into alias (alias_id, name, persona, agent_id)
+    values
+    (1, 'Corbin March', 'Software Engineer Program Instructor who loves philosophy and his family', 9),
+    (2, 'Irina Cudo', 'Software Engineer Program Instructor Assistant who flips houses and loves playing with cats', 10);
     
 	insert into location (location_id, name, address, city, region, country_code, postal_code, agency_id)
 		values
