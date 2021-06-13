@@ -1,6 +1,7 @@
 package learn.field_agent.domain;
 
 import learn.field_agent.data.AliasRepository;
+import learn.field_agent.models.Agent;
 import learn.field_agent.models.Alias;
 import learn.field_agent.models.SecurityClearance;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ public class AliasService {
     }
 
     public List<Alias> findAll() { return repository.findAll(); }
+
+    public Agent findAgentByAliasId(int aliasId) {return repository.findAgentByAliasId(aliasId);}
 
     public Result<Alias> add(Alias alias) {
         Result<Alias> result = validate(alias);

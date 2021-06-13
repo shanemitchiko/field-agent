@@ -145,7 +145,7 @@ begin
     insert into alias
     values
     (1, 'Irina', 'Software Engineer Program Instructor Assistant by day, cat aficionado and house flipper by night', 1),
-    (2, 'Corbin', 'Nature-loving Philosopher with a side gig of Software Engineer Program Instructor', 2);
+    (2, 'Corbin', 'Nature-loving Philosopher with a side gig of being a Software Engineer Program Instructor', 2);
     
 	insert into agency_agent 
 		(agency_id, agent_id, identifier, security_clearance_id, activation_date)

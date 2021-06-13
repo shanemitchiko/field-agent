@@ -8,6 +8,8 @@ import org.mockito.internal.matchers.Equals;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
@@ -29,6 +31,17 @@ class AliasJdbcTemplateRepositoryTest {
         Alias actual = repository.add(alias);
         assertNotNull(actual);
         assertEquals(3, actual.getAliasId());
+    }
+
+    @Test
+    void shouldFindIrina() {
+        Agent hazel = repository.findAgentByAliasId(1);
+        assertEquals("Hazel", hazel.getFirstName());
+        assertEquals("C", hazel.getMiddleName());
+        assertEquals("Sauven", hazel.getLastName());
+        assertEquals(LocalDate.of(1954,9,16), hazel.getDob());
+        assertEquals(76, hazel.getHeightInInches());
+        assertEquals(1, hazel.getAgentId());
     }
 
     @Test
