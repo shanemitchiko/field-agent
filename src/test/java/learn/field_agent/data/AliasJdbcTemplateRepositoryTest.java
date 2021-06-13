@@ -33,11 +33,22 @@ class AliasJdbcTemplateRepositoryTest {
 
     @Test
     void shouldUpdate() {
-        Alias alias = makeAlias();
-        alias.setAliasId(3);
+        Alias alias =  new Alias();
+        alias.setAliasId(1);
         alias.setName("UPDATED ALIAS");
+        alias.setPersona("UPDATED PERSONA");
+
+        Agent hazel = repository.findAgentByAliasId(1);
+        assertNotNull(hazel);
+        alias.setAgent(hazel);
+
         assertTrue(repository.update(alias));
 
+    }
+    @Test
+    void shouldDelete() {
+        assertTrue(repository.deleteById(2));
+        assertFalse(repository.deleteById(2));
     }
 
     private Alias makeAlias() {

@@ -30,6 +30,7 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
         return jdbcTemplate.query(sql, new AliasMapper());
     }
 
+    @Override
     public Alias add(Alias alias) {
 
         final String sql = "insert into alias (name, persona, agent_id) "
@@ -52,25 +53,28 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
         return alias;
     }
 
+    @Override
     public boolean update(Alias alias) {
 
         final String sql = "update alias set "
                 + "name = ?, "
-                + "persona = ? "
-                + "where alias_id = ? and agent_id = ?;";
+                + "persona = ?, "
+                + "agent_id = ? "
+                + "where alias_id = ?;";
 
         return jdbcTemplate.update(sql,
-                alias.getAliasId(),
                 alias.getName(),
                 alias.getPersona(),
-                alias.getAgent().getAgentId()) > 0;
+                alias.getAgent().getAgentId(),
+                alias.getAliasId()) > 0;
     }
 
     public boolean deleteById(int aliasId) {
         return jdbcTemplate.update("delete from alias where alias_id = ?;", aliasId) > 0;
     }
 
-    private void addAgencies(Agent agent) {
+    @Override
+    public void addAgencies(Agent agent) {
 
         final String sql = "select aa.agency_id, aa.agent_id, aa.identifier, aa.activation_date, aa.is_active, "
                 + "sc.security_clearance_id, sc.name security_clearance_name, "
