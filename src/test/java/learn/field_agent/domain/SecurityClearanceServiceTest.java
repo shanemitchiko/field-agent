@@ -1,7 +1,6 @@
 package learn.field_agent.domain;
 
 import learn.field_agent.data.SecurityClearanceRepository;
-import learn.field_agent.models.Location;
 import learn.field_agent.models.SecurityClearance;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +70,7 @@ class SecurityClearanceServiceTest {
         securityClearance = makeSecurityClearance();
         securityClearance.setName(" ");
 
-        actual = service.add(securityClearance);
+        actual = service.update(securityClearance);
         assertEquals(ResultType.INVALID, actual.getType());
 
         SecurityClearance arg = new SecurityClearance();

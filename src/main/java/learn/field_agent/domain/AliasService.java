@@ -2,9 +2,12 @@ package learn.field_agent.domain;
 
 import learn.field_agent.data.AliasRepository;
 import learn.field_agent.models.Alias;
+import learn.field_agent.models.SecurityClearance;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class AliasService {
 
     private final AliasRepository repository;
@@ -31,6 +34,25 @@ public class AliasService {
         return result;
     }
 
+    public Result<Alias> update(Alias alias) {
+        Result<Alias> result = validate(alias);
+
+        if (!result.isSuccess()) {
+            return result;
+        }
+
+        if (alias.getAliasId() <= 0) {
+            result.addMessage("alias id must be set for `update` operation", ResultType.INVALID);
+            return result;
+        }
+
+        if (!repository.update(alias)) {
+            String msg = String.format("security_clearance_id: %s, not found", alias.getAliasId());
+            result.addMessage(msg, ResultType.NOT_FOUND);
+        }
+        return result;
+    }
+
     private Result<Alias> validate(Alias alias) {
         Result<Alias> result = new Result<>();
 
@@ -45,11 +67,9 @@ public class AliasService {
 
         List<Alias> aliases = repository.findAll();
         for (Alias a : aliases)
-            if (alias.getAliasId() == a.getAliasId() &&
-                    alias.getName() == a.getName() &&
-                    alias.getPersona() == alias.getPersona() &&
+            if (alias.getPersona() == alias.getPersona() &&
                     alias.getAgent().getAgentId() == a.getAgent().getAgentId()) {
-                result.addMessage("Persona is already used for an Alias. Need a different Persona.", ResultType.INVALID);
+                result.addMessage("Persona is already used for an Alias. Need a different Persona for this alias name.", ResultType.INVALID);
                 return result;
             }
         return result;

@@ -114,6 +114,7 @@ public class AgentJdbcTemplateRepository implements AgentRepository {
         agent.setAgencies(agentAgencies);
     }
 
+
     public Agent findAgentByAliasId(int aliasId) {
         final String sql = "select ag.agent_id, ag.first_name, ag.middle_name, ag.last_name, ag.dob, ag.height_in_inches "
                 + "from agent ag "
