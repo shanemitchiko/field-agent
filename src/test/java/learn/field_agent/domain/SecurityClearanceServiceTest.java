@@ -55,9 +55,11 @@ class SecurityClearanceServiceTest {
         SecurityClearance securityClearance = makeSecurityClearance();
         securityClearance.setSecurityClearanceId(1);
 
+        securityClearance.setName("Updated Secret");
         when(repository.update(securityClearance)).thenReturn(true);
         Result<SecurityClearance> actual = service.update(securityClearance);
         assertEquals(ResultType.SUCCESS, actual.getType());
+        System.out.println(securityClearance.getName());
     }
 
     @Test
