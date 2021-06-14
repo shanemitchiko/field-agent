@@ -68,11 +68,8 @@ public class SecurityClearanceService {
             result.addMessage("name is required", ResultType.INVALID);
         }
 
-        List<SecurityClearance> clearances = repository.findAll();
-        for (SecurityClearance sc : clearances)
-            if (sc.getName() == securityClearance.getName()) {
-                result.addMessage("cannot be a duplicate", ResultType.INVALID);
-                return result;
+        if(repository.findAll().stream().anyMatch(s -> s.getName().equalsIgnoreCase(securityClearance.getName()))) {
+            result.addMessage("cannot have duplicate name", ResultType.INVALID);
 
             }
         return result;

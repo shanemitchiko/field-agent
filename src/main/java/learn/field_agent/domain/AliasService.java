@@ -70,11 +70,15 @@ public class AliasService {
             result.addMessage("name is required", ResultType.INVALID);
         }
 
-        List<Alias> aliases = repository.findAll();
-        for (Alias a : aliases)
-            if (alias.getName() == alias.getName() &&
-                    alias.getAgent().getAgentId() == a.getAgent().getAgentId()) {
-                result.addMessage("Name is duplicate. Need persona for this alias.", ResultType.INVALID);
+        if(repository.findAll().stream()
+                .anyMatch(a -> a.getPersona().equalsIgnoreCase(alias.getPersona()))) {
+            result.addMessage("cannot have duplicate name and persona. different persona required", ResultType.INVALID);
+        }
+
+        if(repository.findAll().stream().anyMatch(a -> a.getName().equalsIgnoreCase(alias.getName()))){
+            if (Validations.isNullOrBlank(alias.getPersona())) {
+                result.addMessage("name is a duplicate, persona is required.", ResultType.INVALID);
+            }
         }
         return result;
     }
