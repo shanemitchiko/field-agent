@@ -12,6 +12,8 @@ public interface AliasRepository {
 
     boolean update(Alias alias);
 
+    boolean deleteById(int aliasId);
+
     void addAgencies(Agent agent);
 
     Agent findAgentByAliasId(int aliasId);

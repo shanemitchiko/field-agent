@@ -56,6 +56,8 @@ public class AliasService {
         return result;
     }
 
+    public boolean deleteById(int securityClearanceId) {return repository.deleteById(securityClearanceId);}
+
     private Result<Alias> validate(Alias alias) {
         Result<Alias> result = new Result<>();
 

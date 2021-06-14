@@ -69,6 +69,7 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
                 alias.getAliasId()) > 0;
     }
 
+    @Override
     public boolean deleteById(int aliasId) {
         return jdbcTemplate.update("delete from alias where alias_id = ?;", aliasId) > 0;
     }
@@ -92,7 +93,7 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
     public Agent findAgentByAliasId(int aliasId) {
         final String sql = "select ag.agent_id, ag.first_name, ag.middle_name, ag.last_name, ag.dob, ag.height_in_inches "
                 + "from agent ag "
-                + "inner join alias al on al.agent_id = ag.agent_id "
+                + "inner join alias a on a.agent_id = ag.agent_id "
                 + "where alias_id = ? limit 1;";
 
         Agent agent = jdbcTemplate.query(sql, new AgentMapper(), aliasId).stream()
