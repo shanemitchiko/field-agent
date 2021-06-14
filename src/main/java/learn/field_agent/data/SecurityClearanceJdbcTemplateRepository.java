@@ -1,5 +1,6 @@
 package learn.field_agent.data;
 
+import learn.field_agent.data.mappers.AgencyAgentMapper;
 import learn.field_agent.data.mappers.SecurityClearanceMapper;
 import learn.field_agent.models.SecurityClearance;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -67,14 +68,31 @@ public class SecurityClearanceJdbcTemplateRepository implements SecurityClearanc
                     + "where security_clearance_id = ?;";
 
         int rowsUpdated = jdbcTemplate.update(sql,
-                    securityClearance.getName(), securityClearance.getSecurityClearanceId());
+                    securityClearance.getName(),
+                securityClearance.getSecurityClearanceId());
 
         return rowsUpdated > 0;
     }
 
     @Override
     public boolean deleteById(int securityClearanceId) {
-        jdbcTemplate.update("delete from agency_agent where agent_id = ?;", securityClearanceId);
-        return jdbcTemplate.update("delete from security_clearance where security_clearance_id = ?;", securityClearanceId) > 0;
+        final String sql = "select aa.agency_id, aa.identifier, aa.activation_date, aa.is_active, " +
+                "sc.security_clearance_id, sc.name security_clearance_name, " +
+                "a.agent_id, a.first_name, a.middle_name, a.last_name, a.dob, a.height_in_inches " +
+                "from agency_agent aa " +
+                "inner join security_clearance sc on aa.security_clearance_id = sc.security_clearance_id " +
+                "inner join agent a on aa.agent_id = a.agent_id " +
+                "where sc.security_clearance_id = ? limit 1;";
+
+        var agencyAgent = jdbcTemplate.query(sql, new AgencyAgentMapper(), securityClearanceId)
+                .stream()
+                .findFirst().orElse(null);
+
+        if(agencyAgent != null) {
+            return false;
+        }
+
+        final String Deletesql = "delete from security_clearance where security_clearance_id = ?;";
+        return jdbcTemplate.update(Deletesql, securityClearanceId) > 0;
     }
 }

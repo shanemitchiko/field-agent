@@ -74,9 +74,6 @@ public class SecurityClearanceService {
                 result.addMessage("cannot be a duplicate", ResultType.INVALID);
                 return result;
 
-//        if(repository.findAll().stream().anyMatch(s -> s.getName().equalsIgnoreCase(securityClearance.getName()))) {
-//            result.addMessage("Name cannot be duplicate", ResultType.INVALID);
-
             }
         return result;
     }

@@ -26,7 +26,7 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
         final String sql = "select a.alias_id, a.name, a.persona, a.agent_id, " +
                 "ag.agent_id, ag.first_name, ag.middle_name, ag.last_name, ag.dob, ag. height_in_inches " +
                 "from alias a " +
-                "inner join agent ag on ag.agent_id = a.agent_id;";
+                "inner join agent ag on a.agent_id = ag.agent_id;";
         return jdbcTemplate.query(sql, new AliasMapper());
     }
 
@@ -93,7 +93,7 @@ public class AliasJdbcTemplateRepository implements AliasRepository {
     public Agent findAgentByAliasId(int aliasId) {
         final String sql = "select ag.agent_id, ag.first_name, ag.middle_name, ag.last_name, ag.dob, ag.height_in_inches "
                 + "from agent ag "
-                + "inner join alias a on a.agent_id = ag.agent_id "
+                + "inner join alias a on ag.agent_id = a.agent_id "
                 + "where alias_id = ? limit 1;";
 
         Agent agent = jdbcTemplate.query(sql, new AgentMapper(), aliasId).stream()
