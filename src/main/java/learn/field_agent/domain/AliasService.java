@@ -72,12 +72,10 @@ public class AliasService {
 
         List<Alias> aliases = repository.findAll();
         for (Alias a : aliases)
-            if (alias.getPersona() == alias.getPersona() &&
+            if (alias.getName() == alias.getName() &&
                     alias.getAgent().getAgentId() == a.getAgent().getAgentId()) {
-                result.addMessage("Persona is already used for an Alias. Need a different Persona for this alias name.", ResultType.INVALID);
-                return result;
-            }
+                result.addMessage("Name is duplicate. Need persona for this alias.", ResultType.INVALID);
+        }
         return result;
     }
-
 }
