@@ -4,8 +4,13 @@ import learn.field_agent.data.AgentRepository;
 import learn.field_agent.models.Agent;
 import org.springframework.stereotype.Service;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class AgentService {
@@ -70,13 +75,17 @@ public class AgentService {
             return result;
         }
 
-        if (Validations.isNullOrBlank(agent.getFirstName())) {
-            result.addMessage("firstName is required", ResultType.INVALID);
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<Agent>> violations = validator.validate(agent);
+
+        if (!violations.isEmpty()) {
+            for (ConstraintViolation<Agent> violation : violations) {
+                result.addMessage(violation.getMessage(), ResultType.INVALID);
+            }
+            return result;
         }
 
-        if (Validations.isNullOrBlank(agent.getLastName())) {
-            result.addMessage("lastName is required", ResultType.INVALID);
-        }
 
         if (agent.getDob() != null && agent.getDob().isAfter(LocalDate.now().minusYears(12))) {
             result.addMessage("agents younger than 12 are not allowed", ResultType.INVALID);

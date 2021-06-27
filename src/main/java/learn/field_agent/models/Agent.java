@@ -1,5 +1,7 @@
 package learn.field_agent.models;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,10 +9,15 @@ import java.util.List;
 public class Agent {
 
     private int agentId;
+    @NotBlank
     private String firstName;
+
     private String middleName;
+    @NotBlank
     private String lastName;
+
     private LocalDate dob;
+    @NotNull
     private int heightInInches;
     private List<AgentAgency> agencies = new ArrayList<>();
 
