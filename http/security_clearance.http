@@ -11,7 +11,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "name": "Hidden Secret"
+  "name": "Secret"
 }
 
 ###
