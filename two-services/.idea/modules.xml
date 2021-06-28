@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../field-agent-new/field-agent.iml" filepath="$PROJECT_DIR$/../field-agent-new/field-agent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Dev10/Java/class/cohort-5/user-api/user-api.iml" filepath="$PROJECT_DIR$/../Dev10/Java/class/cohort-5/user-api/user-api.iml" />
+    </modules>
+  </component>
+</project>
